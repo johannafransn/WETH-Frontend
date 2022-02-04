@@ -21,16 +21,17 @@ main {
 }
 
 
-.btn.btn-light {
-	background-color: #22212a;
-	width: 25%;
-	border-radius: 15px;
-	color: white;
+.btn-light {
+  color: #fff;
+  background-color: #0e1340;
+  border-color: #0e1340; 
   margin-left: 20px;
+width: 140px;
 }
-
-.btn.btn-light:hover {
-	background-color: 'white';
+.btn-light:hover{
+  color: #fff;
+  background-color: #3c4278;
+  border-color: #0e1340; 
 }
 
 h1,
