@@ -46,7 +46,7 @@ const Footer = () => {
             <li>
               <a
                 target="_blank"
-                href="https://github.com/MarcusWentz/DisruptiveInsurance/"
+                href="https://github.com/johannafransn/WETH-Frontend"
               >
                 Github
               </a>

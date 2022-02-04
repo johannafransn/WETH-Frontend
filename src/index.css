@@ -20,6 +20,19 @@ main {
   text-align: center;
 }
 
+
+.btn.btn-light {
+	background-color: #22212a;
+	width: 25%;
+	border-radius: 15px;
+	color: white;
+  margin-left: 20px;
+}
+
+.btn.btn-light:hover {
+	background-color: 'white';
+}
+
 h1,
 h2,
 h3,
