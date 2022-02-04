@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import EthLogo from "../eth_logo.svg";
 
 const About = () => {

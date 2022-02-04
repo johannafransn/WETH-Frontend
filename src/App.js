@@ -7,7 +7,6 @@ import About from './pages/About';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function App() {
   return (

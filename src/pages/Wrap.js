@@ -9,27 +9,19 @@ export default function Wrap({ degree, userLocation, basic }) {
   const [userEthInput, setUserEthInput] = useState(null);
   const [wethContract, setWethContract] = useState(null);
 
+  useEffect(() => {
+    const loadBlockchainData = async () => {
+      const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+      const network = await web3.eth.net.getNetworkType();
+      await window.ethereum.enable();
 
-  /*   useEffect(() => {
-    const fetchApiData = async () => {
-      const liveUrl =
-        "https://allemansbacken.newseed.se/v1/gcd?latitude=4&longitude=5"
-      const res = await fetch(liveUrl);
-      const data = await res.json();
-      setApiData(data);
+      //Load the smart contract
+      const wethContract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
+      setWethContract(wethContract);
+      console.log(wethContract, 'WEETHCOntract')
     };
-    fetchApiData();
-  }, []); */
-
-  const  loadBlockchainData = async () => {
-    const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
-    const network = await web3.eth.net.getNetworkType();
-    await window.ethereum.enable();
-
-    //Load the smart contract
-    const wethContract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
-    setWethContract(wethContract);
-  };
+    loadBlockchainData();
+  }, []);
 
   const renderInputBox = () => {
     return (
