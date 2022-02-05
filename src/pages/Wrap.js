@@ -47,6 +47,7 @@ export default function Wrap({ degree, userLocation, basic }) {
           <input
             type="number"
             class="form-control"
+            min="0"
             placeholder="Enter ETH amount"
             data-name="eth"
             value={userEthInput}
@@ -65,6 +66,7 @@ export default function Wrap({ degree, userLocation, basic }) {
         <input
           type="number"
           class="form-control"
+          min="0"
           placeholder="Enter WETH amount"
           value={userWethInput}
           data-name="weth"
@@ -86,7 +88,7 @@ export default function Wrap({ degree, userLocation, basic }) {
   const onWrapClick = () => {
     console.log("ETH -> WETH: ETH =", userEthInput);
     if (metamaskAddress) {
-      let userInputInWei = userEthInput * (10 ** 18);
+      let userInputInWei = userEthInput * 10 ** 18;
       if (userInputInWei >= 1) {
         console.log(userInputInWei, "userInput In wEI");
         let web3js = new Web3(window.web3.currentProvider);
@@ -118,7 +120,7 @@ export default function Wrap({ degree, userLocation, basic }) {
         });
       }
     } else {
-        console.log("Error TODO: Popup, you are trying to send less than 1 WEI");
+      console.log("Error TODO: Popup, you are trying to send less than 1 WEI");
     }
   };
 
