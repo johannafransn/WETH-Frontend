@@ -95,7 +95,7 @@ export default function Wrap({ degree, userLocation, basic }) {
 
     try {
       if (metamaskAddress) {
-        let userInputInWei = userEthInput * 10 ** 18;
+        let userInputInWei = userEthInput * (10 ** 18);
         if (userInputInWei >= 1) {
           console.log(userInputInWei, "userInput In wEI");
           let web3js = new Web3(window.web3.currentProvider);
@@ -115,8 +115,7 @@ export default function Wrap({ degree, userLocation, basic }) {
       setErrorMsg(
         "Something went wrong, please try again or report this issue"
       );
-
-      console.log("Generic Error TODO: Popup, ");
+      console.log("1Generic Error TODO: Popup, ");
     }
   };
 
@@ -124,7 +123,7 @@ export default function Wrap({ degree, userLocation, basic }) {
     console.log("WETH -> ETH: WETH =", userWethInput);
     try {
       if (metamaskAddress) {
-        let userInputInWei = userEthInput * 10 ** 18;
+        let userInputInWei = userEthInput * (10 ** 18);
         if (userInputInWei >= 1) {
           console.log(userInputInWei, "userInput In wEI");
           let web3js = new Web3(window.web3.currentProvider);
@@ -143,8 +142,7 @@ export default function Wrap({ degree, userLocation, basic }) {
       setErrorMsg(
         "Something went wrong, please try again or report this issue"
       );
-
-      console.log(err, "Generic Error TODO: Popup, ");
+      console.log(err, "2Generic Error TODO: Popup, ");
     }
   };
 
