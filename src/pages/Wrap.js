@@ -11,7 +11,6 @@ export default function Wrap({ degree, userLocation, basic }) {
   const [wethBalance, setAvailableWethBalance] = useState(null);
   const [metamaskAddress, setMetamaskAddress] = useState("");
 
-  //
   useEffect(() => {
     const loadBlockchainData = async () => {
       const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
@@ -85,14 +84,11 @@ export default function Wrap({ degree, userLocation, basic }) {
   };
 
   const onWrapClick = () => {
-    console.log("ETH", userEthInput);
+    console.log("ETH -> WETH: ETH =", userEthInput);
     if (metamaskAddress) {
-      //Has decimal place, convert to wei
-      //1 eth = 10^18
       let userInputInWei = userEthInput * (10 ** 18);
-      if (userInputInWei >= 1 * 10 ** -18) {
+      if (userInputInWei >= 1) {
         console.log(userInputInWei, "userInput In wEI");
-        //Whole number
         let web3js = new Web3(window.web3.currentProvider);
         web3js.eth.sendTransaction({
           to: CONTRACT_ADDRESS,
@@ -109,10 +105,11 @@ export default function Wrap({ degree, userLocation, basic }) {
   };
 
   const onUnwrapClick = () => {
-    console.log("WETH", userWethInput);
+    console.log("WETH -> ETH: WETH =", userWethInput);
     if (metamaskAddress) {
       let userInputInWei = userEthInput * 10 ** 18;
-      if (userInputInWei >= 1 * (10 ** -18)) {
+      if (userInputInWei >= 1) {
+        console.log(userInputInWei, "userInput In wEI");
         let web3js = new Web3(window.web3.currentProvider);
         web3js.eth.sendTransaction({
           to: CONTRACT_ADDRESS,
@@ -120,7 +117,7 @@ export default function Wrap({ degree, userLocation, basic }) {
           from: metamaskAddress,
         });
       }
-    }else{
+    } else {
         console.log("Error TODO: Popup, you are trying to send less than 1 WEI");
     }
   };
