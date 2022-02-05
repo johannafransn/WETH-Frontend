@@ -124,7 +124,7 @@ export default function Wrap({ degree, userLocation, basic }) {
     try {
       if (metamaskAddress) {
         let web3js = new Web3(window.web3.currentProvider);
-        let userInputInWei = web3js.utils.toWei(userEthInput, 'ether');
+        let userInputInWei = web3js.utils.toWei(userWethInput, 'ether');
         if (userInputInWei >= 1) {
           console.log(userInputInWei, "userInput In WEI");
           web3js.eth.sendTransaction({
