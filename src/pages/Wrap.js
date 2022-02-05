@@ -92,21 +92,23 @@ export default function Wrap({ degree, userLocation, basic }) {
 
   const onWrapClick = () => {
     console.log("ETH -> WETH: ETH =", userEthInput);
-    if (metamaskAddress) {
-      let web3js = new Web3(window.web3.currentProvider);
-      let userInputInWei = web3js.utils.toWei(userEthInput, 'ether');
-      if (userInputInWei >= 1) {
-        console.log(userInputInWei, "userInput In WEI");
-        web3js.eth.sendTransaction({
-          to: CONTRACT_ADDRESS,
-          data: wethContract.methods.deposit().encodeABI(),
-          value: userInputInWei,
-          from: metamaskAddress,
-        });
-      } else {
-        console.log(
-          "Error TODO: Popup, you are trying to send less than 1 WEI"
-        );
+    try {
+      if (metamaskAddress) {
+        let web3js = new Web3(window.web3.currentProvider);
+        let userInputInWei = web3js.utils.toWei(userEthInput, 'ether');
+        if (userInputInWei >= 1) {
+          console.log(userInputInWei, "userInput In WEI");
+          web3js.eth.sendTransaction({
+            to: CONTRACT_ADDRESS,
+            data: wethContract.methods.deposit().encodeABI(),
+            value: userInputInWei,
+            from: metamaskAddress,
+          });
+        } else {
+          console.log(
+            "Error TODO: Popup, you are trying to send less than 1 WEI"
+          );
+        }
       }
     } catch (err) {
       setShowToast(true);
@@ -119,16 +121,18 @@ export default function Wrap({ degree, userLocation, basic }) {
 
   const onUnwrapClick = () => {
     console.log("WETH -> ETH: WETH =", userWethInput);
-    if (metamaskAddress) {
-      let web3js = new Web3(window.web3.currentProvider);
-      let userInputInWei = web3js.utils.toWei(userEthInput, 'ether');
-      if (userInputInWei >= 1) {
-        console.log(userInputInWei, "userInput In WEI");
-        web3js.eth.sendTransaction({
-          to: CONTRACT_ADDRESS,
-          data: wethContract.methods.withdraw(userInputInWei).encodeABI(),
-          from: metamaskAddress,
-        });
+    try {
+      if (metamaskAddress) {
+        let web3js = new Web3(window.web3.currentProvider);
+        let userInputInWei = web3js.utils.toWei(userEthInput, 'ether');
+        if (userInputInWei >= 1) {
+          console.log(userInputInWei, "userInput In WEI");
+          web3js.eth.sendTransaction({
+            to: CONTRACT_ADDRESS,
+            data: wethContract.methods.withdraw(userInputInWei).encodeABI(),
+            from: metamaskAddress,
+          });
+        }
       }
     } catch (err) {
       setShowToast(true);
