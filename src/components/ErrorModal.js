@@ -1,7 +1,7 @@
 import { Modal } from "react-bootstrap";
 import React, { Component, useEffect, useState } from "react";
 
-export default function ErrorModal({ showToastFromProp }) {
+export default function ErrorModal({ showToastFromProp, errorMsg }) {
   const [showToast, setShowToast] = useState(false);
 
   const _closeToast = () => {
@@ -33,7 +33,7 @@ export default function ErrorModal({ showToastFromProp }) {
         <Modal.Header>Warning</Modal.Header>
         <Modal.Body>
           <div className="inv-toast-body">
-            You have to connect to Metamask before doing this!
+            {errorMsg}
           </div>
         </Modal.Body>
       </Modal>

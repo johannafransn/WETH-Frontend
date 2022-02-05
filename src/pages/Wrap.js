@@ -16,6 +16,7 @@ export default function Wrap({ degree, userLocation, basic }) {
   const [wethBalance, setAvailableWethBalance] = useState(null);
   const [metamaskAddress, setMetamaskAddress] = useState("");
   const [showToast, setShowToast] = useState();
+  const [errorMsg, setErrorMsg] = useState();
 
   useEffect(() => {
     const loadBlockchainData = async () => {
@@ -91,45 +92,59 @@ export default function Wrap({ degree, userLocation, basic }) {
 
   const onWrapClick = () => {
     console.log("ETH -> WETH: ETH =", userEthInput);
-    if (metamaskAddress) {
-      let userInputInWei = userEthInput * (10 ** 18);
-      if (userInputInWei >= 1) {
-        console.log(userInputInWei, "userInput In wEI");
-        let web3js = new Web3(window.web3.currentProvider);
-        web3js.eth.sendTransaction({
-          to: CONTRACT_ADDRESS,
-          data: wethContract.methods.deposit().encodeABI(),
-          value: userInputInWei,
-          from: metamaskAddress,
-        });
-      } else {
-        setShowToast(true);
-        console.log(
-          "Error TODO: Popup, you are trying to send less than 1 WEI"
-        );
+
+    try {
+      if (metamaskAddress) {
+        let userInputInWei = userEthInput * 10 ** 18;
+        if (userInputInWei >= 1) {
+          console.log(userInputInWei, "userInput In wEI");
+          let web3js = new Web3(window.web3.currentProvider);
+          web3js.eth.sendTransaction({
+            to: CONTRACT_ADDRESS,
+            data: wethContract.methods.deposit().encodeABI(),
+            value: userInputInWei,
+            from: metamaskAddress,
+          });
+        } else {
+          setShowToast(true);
+          setErrorMsg("Error, you are trying to send less than 1 WEI");
+        }
       }
+    } catch (err) {
+      setShowToast(true);
+      setErrorMsg(
+        "Something went wrong, please try again or report this issue"
+      );
+
+      console.log("Generic Error TODO: Popup, ");
     }
   };
 
   const onUnwrapClick = () => {
     console.log("WETH -> ETH: WETH =", userWethInput);
-    if (metamaskAddress) {
-      let userInputInWei = userEthInput * (10 ** 18);
-      if (userInputInWei >= 1) {
-        console.log(userInputInWei, "userInput In wEI");
-        let web3js = new Web3(window.web3.currentProvider);
-        web3js.eth.sendTransaction({
-          to: CONTRACT_ADDRESS,
-          data: wethContract.methods.withdraw(userInputInWei).encodeABI(),
-          from: metamaskAddress,
-        });
-      } else {
-        setShowToast(true);
-
-        console.log(
-          "Error TODO: Popup, you are trying to send less than 1 WEI"
-        );
+    try {
+      if (metamaskAddress) {
+        let userInputInWei = userEthInput * 10 ** 18;
+        if (userInputInWei >= 1) {
+          console.log(userInputInWei, "userInput In wEI");
+          let web3js = new Web3(window.web3.currentProvider);
+          web3js.eth.sendTransaction({
+            to: CONTRACT_ADDRESS,
+            data: wethContract.methods.withdraw(userInputInWei).encodeABI(),
+            from: metamaskAddress,
+          });
+        } else {
+          setShowToast(true);
+          setErrorMsg("Error, you are trying to send less than 1 WEI");
+        }
       }
+    } catch (err) {
+      setShowToast(true);
+      setErrorMsg(
+        "Something went wrong, please try again or report this issue"
+      );
+
+      console.log(err, "Generic Error TODO: Popup, ");
     }
   };
 
@@ -151,7 +166,10 @@ export default function Wrap({ degree, userLocation, basic }) {
         <div class="col"></div>
       </div>
       {showToast ? (
-        <ErrorModal showToastFromProp={showToast}></ErrorModal>
+        <ErrorModal
+          showToastFromProp={showToast}
+          errorMsg={errorMsg}
+        ></ErrorModal>
       ) : null}
     </div>
   );
