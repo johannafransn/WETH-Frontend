@@ -2,6 +2,11 @@ import EthLogo from "../eth_logo.svg";
 import React, { Component, useEffect, useState } from "react";
 import Web3 from "web3";
 import { CONTRACT_ADDRESS, ABI } from "../config";
+import ErrorModal from "../components/ErrorModal";
+
+//TODO: add ErrorModal
+//MetaMask wallet shown/button if connect
+//Dropdown for network switch statements
 
 export default function Wrap({ degree, userLocation, basic }) {
   const [apiData, setApiData] = useState([]);
@@ -10,6 +15,7 @@ export default function Wrap({ degree, userLocation, basic }) {
   const [wethContract, setWethContract] = useState(null);
   const [wethBalance, setAvailableWethBalance] = useState(null);
   const [metamaskAddress, setMetamaskAddress] = useState("");
+  const [showToast, setShowToast] = useState();
 
   //
   useEffect(() => {
@@ -89,7 +95,7 @@ export default function Wrap({ degree, userLocation, basic }) {
     if (metamaskAddress) {
       //Has decimal place, convert to wei
       //1 eth = 10^18
-      let userInputInWei = userEthInput * (10 ** 18);
+      let userInputInWei = userEthInput * 10 ** 18;
       if (userInputInWei >= 1 * 10 ** -18) {
         console.log(userInputInWei, "userInput In wEI");
         //Whole number
@@ -101,6 +107,7 @@ export default function Wrap({ degree, userLocation, basic }) {
           from: metamaskAddress,
         });
       } else {
+        setShowToast(true);
         console.log(
           "Error TODO: Popup, you are trying to send less than 1 WEI"
         );
@@ -112,17 +119,19 @@ export default function Wrap({ degree, userLocation, basic }) {
     console.log("WETH", userWethInput);
     if (metamaskAddress) {
       let userInputInWei = userEthInput * 10 ** 18;
-      if (userInputInWei >= 1 * (10 ** -18)) {
+      //if(userInputInWei >= 1 * 10 ** -18{
+      if (1==2) {
         let web3js = new Web3(window.web3.currentProvider);
         web3js.eth.sendTransaction({
           to: CONTRACT_ADDRESS,
           data: wethContract.methods.withdraw(userInputInWei).encodeABI(),
           from: metamaskAddress,
         });
-      }
-    }else{
+      }else {
+        setShowToast(true);
         console.log("Error TODO: Popup, you are trying to send less than 1 WEI");
-    }
+      }
+    } 
   };
 
   return (
@@ -142,6 +151,7 @@ export default function Wrap({ degree, userLocation, basic }) {
         </div>
         <div class="col"></div>
       </div>
+      {showToast ? <ErrorModal showToastFromProp={showToast}></ErrorModal> : null}
     </div>
   );
 }
