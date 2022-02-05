@@ -11,6 +11,7 @@ export default function Wrap({ degree, userLocation, basic }) {
   const [wethBalance, setAvailableWethBalance] = useState(null);
   const [metamaskAddress, setMetamaskAddress] = useState("");
 
+  //
   useEffect(() => {
     const loadBlockchainData = async () => {
       const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
@@ -86,25 +87,41 @@ export default function Wrap({ degree, userLocation, basic }) {
   const onWrapClick = () => {
     console.log("ETH", userEthInput);
     if (metamaskAddress) {
-      let web3js = new Web3(window.web3.currentProvider);
-      web3js.eth.sendTransaction({
-        to: CONTRACT_ADDRESS,
-        data: wethContract.methods.deposit().encodeABI(),
-        value: userEthInput,
-        from: metamaskAddress,
-      });
+      //Has decimal place, convert to wei
+      //1 eth = 10^18
+      let userInputInWei = userEthInput * (10 ** 18);
+      if (userInputInWei >= 1 * 10 ** -18) {
+        console.log(userInputInWei, "userInput In wEI");
+        //Whole number
+        let web3js = new Web3(window.web3.currentProvider);
+        web3js.eth.sendTransaction({
+          to: CONTRACT_ADDRESS,
+          data: wethContract.methods.deposit().encodeABI(),
+          value: userInputInWei,
+          from: metamaskAddress,
+        });
+      } else {
+        console.log(
+          "Error TODO: Popup, you are trying to send less than 1 WEI"
+        );
+      }
     }
   };
 
   const onUnwrapClick = () => {
     console.log("WETH", userWethInput);
     if (metamaskAddress) {
-      let web3js = new Web3(window.web3.currentProvider);
-      web3js.eth.sendTransaction({
-        to: CONTRACT_ADDRESS,
-        data: wethContract.methods.withdraw(userWethInput).encodeABI(),
-        from: metamaskAddress,
-      });
+      let userInputInWei = userEthInput * 10 ** 18;
+      if (userInputInWei >= 1 * (10 ** -18)) {
+        let web3js = new Web3(window.web3.currentProvider);
+        web3js.eth.sendTransaction({
+          to: CONTRACT_ADDRESS,
+          data: wethContract.methods.withdraw(userInputInWei).encodeABI(),
+          from: metamaskAddress,
+        });
+      }
+    }else{
+        console.log("Error TODO: Popup, you are trying to send less than 1 WEI");
     }
   };
 
