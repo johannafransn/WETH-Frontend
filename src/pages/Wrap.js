@@ -92,13 +92,12 @@ export default function Wrap({ degree, userLocation, basic }) {
 
   const onWrapClick = () => {
     console.log("ETH -> WETH: ETH =", userEthInput);
-
     try {
       if (metamaskAddress) {
-        let userInputInWei = userEthInput * (10 ** 18);
+        let web3js = new Web3(window.web3.currentProvider);
+        let userInputInWei = web3js.utils.toWei(userEthInput, 'ether');
         if (userInputInWei >= 1) {
-          console.log(userInputInWei, "userInput In wEI");
-          let web3js = new Web3(window.web3.currentProvider);
+          console.log(userInputInWei, "userInput In WEI");
           web3js.eth.sendTransaction({
             to: CONTRACT_ADDRESS,
             data: wethContract.methods.deposit().encodeABI(),
@@ -106,8 +105,9 @@ export default function Wrap({ degree, userLocation, basic }) {
             from: metamaskAddress,
           });
         } else {
-          setShowToast(true);
-          setErrorMsg("Error, you are trying to send less than 1 WEI");
+          console.log(
+            "Error TODO: Popup, you are trying to send less than 1 WEI"
+          );
         }
       }
     } catch (err) {
@@ -123,18 +123,15 @@ export default function Wrap({ degree, userLocation, basic }) {
     console.log("WETH -> ETH: WETH =", userWethInput);
     try {
       if (metamaskAddress) {
-        let userInputInWei = userEthInput * (10 ** 18);
+        let web3js = new Web3(window.web3.currentProvider);
+        let userInputInWei = web3js.utils.toWei(userEthInput, 'ether');
         if (userInputInWei >= 1) {
-          console.log(userInputInWei, "userInput In wEI");
-          let web3js = new Web3(window.web3.currentProvider);
+          console.log(userInputInWei, "userInput In WEI");
           web3js.eth.sendTransaction({
             to: CONTRACT_ADDRESS,
             data: wethContract.methods.withdraw(userInputInWei).encodeABI(),
             from: metamaskAddress,
           });
-        } else {
-          setShowToast(true);
-          setErrorMsg("Error, you are trying to send less than 1 WEI");
         }
       }
     } catch (err) {
