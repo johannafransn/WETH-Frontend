@@ -124,6 +124,8 @@ export default function Wrap({ degree, userLocation, basic }) {
           from: metamaskAddress,
         });
       } else {
+        setShowToast(true);
+
         console.log(
           "Error TODO: Popup, you are trying to send less than 1 WEI"
         );
