@@ -10,7 +10,13 @@ const About = () => {
         </h1>
         <p>An unofficial page created by DeFi enthusiasts as an easy to use 
           interface for wrapping and unwrapping ETH</p>
-      </div>
+          <br></br>
+          <a className="why-use-weth-link"
+                href="https://weth.io/"
+                target="_blank"
+              >
+                Why use WETH ?
+              </a>      </div>
       <div class="col-6">
         <img src={EthLogo} style={{ width: "40%" }} />
       </div>

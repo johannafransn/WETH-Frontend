@@ -40,3 +40,22 @@ h3,
 p {
   color: #0e1340;
 }
+
+
+.modal-content {
+	background-color: white;
+	color: #0e1340;
+	border-radius: 15px;
+	border: 2px solid #3c4278;
+}
+.closeButton {
+	color: white !important;
+}
+
+.why-use-weth-link{
+  color: #0e1340;
+}
+
+.why-use-weth-link:hover{
+  color: #95bcf0;
+}
