@@ -74,6 +74,7 @@ export default function Wrap({ degree, userLocation, basic }) {
           <input
             type="number"
             class="form-control"
+            min="0"
             placeholder="Enter ETH amount"
             data-name="eth"
             value={userEthInput}
@@ -92,6 +93,7 @@ export default function Wrap({ degree, userLocation, basic }) {
         <input
           type="number"
           class="form-control"
+          min="0"
           placeholder="Enter WETH amount"
           value={userWethInput}
           data-name="weth"

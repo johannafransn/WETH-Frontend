@@ -51,3 +51,11 @@ p {
 .closeButton {
 	color: white !important;
 }
+
+.why-use-weth-link{
+  color: #0e1340;
+}
+
+.why-use-weth-link:hover{
+  color: #95bcf0;
+}
