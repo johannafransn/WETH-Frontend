@@ -3,6 +3,7 @@ import React, { Component, useEffect, useState } from "react";
 import Web3 from "web3";
 import { CONTRACT_ADDRESS, ABI } from "../config";
 import ErrorModal from "../components/ErrorModal";
+import { act } from "react-dom/cjs/react-dom-test-utils.production.min";
 
 //TODO: add ErrorModal
 //MetaMask wallet shown/button if connect
@@ -91,47 +92,24 @@ export default function Wrap({ degree, userLocation, basic }) {
   };
 
   const onWrapClick = () => {
-    console.log("ETH -> WETH: ETH =", userEthInput);
-    try {
-      if (metamaskAddress) {
-        let web3js = new Web3(window.web3.currentProvider);
-        let userInputInWei = web3js.utils.toWei(userEthInput, 'ether');
-        if (userInputInWei >= 1) {
-          console.log(userInputInWei, "userInput In WEI");
-          web3js.eth.sendTransaction({
-            to: CONTRACT_ADDRESS,
-            data: wethContract.methods.deposit().encodeABI(),
-            value: userInputInWei,
-            from: metamaskAddress,
-          });
-        } else {
-          console.log(
-            "Error TODO: Popup, you are trying to send less than 1 WEI"
-          );
-        }
-      }
-    } catch (err) {
-      setShowToast(true);
-      setErrorMsg(
-        "Something went wrong, please try again or report this issue"
-      );
-      console.log("1Generic Error TODO: Popup, ");
-    }
+    console.log('wrapping...', userEthInput)
+    return onActivityClick('wrap')
   };
 
   const onUnwrapClick = () => {
-    console.log("WETH -> ETH: WETH =", userWethInput);
+    console.log('unwrapping...', userWethInput)
+    onActivityClick('unwrap')
+  };
+
+  const onActivityClick = (activity) => {
     try {
       if (metamaskAddress) {
         let web3js = new Web3(window.web3.currentProvider);
-        let userInputInWei = web3js.utils.toWei(userWethInput, 'ether');
+        let input = activity == 'wrap' ? userEthInput : userWethInput
+        let userInputInWei = web3js.utils.toWei(input, 'ether');
+        let params = setParams(activity, userInputInWei)
         if (userInputInWei >= 1) {
-          console.log(userInputInWei, "userInput In WEI");
-          web3js.eth.sendTransaction({
-            to: CONTRACT_ADDRESS,
-            data: wethContract.methods.withdraw(userInputInWei).encodeABI(),
-            from: metamaskAddress,
-          });
+          web3js.eth.sendTransaction(params);
         }
       }
     } catch (err) {
@@ -141,6 +119,23 @@ export default function Wrap({ degree, userLocation, basic }) {
       );
       console.log(err, "2Generic Error TODO: Popup, ");
     }
+  };
+
+  const setParams = (activity, userInputInWei) => {
+    let params = {
+      'to': CONTRACT_ADDRESS,
+      'from': metamaskAddress,
+    }
+    switch (activity) {
+      case 'wrap': {
+        params['data'] = wethContract.methods.deposit().encodeABI();
+        params['value'] = userInputInWei
+      } break;
+      case 'unwrap': {
+        params['data'] = wethContract.methods.withdraw(userInputInWei).encodeABI()
+      } break;
+    }
+    return params
   };
 
   return (
