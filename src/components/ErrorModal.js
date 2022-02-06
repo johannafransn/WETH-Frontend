@@ -1,11 +1,12 @@
 import { Modal } from "react-bootstrap";
 import React, { Component, useEffect, useState } from "react";
 
-export default function ErrorModal({ showToastFromProp, errorMsg }) {
+export default function ErrorModal({ showToastFromProp, errorMsg, onClose }) {
   const [showToast, setShowToast] = useState(false);
 
   const _closeToast = () => {
     setShowToast(false);
+    onClose();
   };
 
   const _openToast = () => {};
@@ -32,9 +33,7 @@ export default function ErrorModal({ showToastFromProp, errorMsg }) {
       >
         <Modal.Header>Warning</Modal.Header>
         <Modal.Body>
-          <div className="inv-toast-body">
-            {errorMsg}
-          </div>
+          <div className="inv-toast-body">{errorMsg}</div>
         </Modal.Body>
       </Modal>
     );
