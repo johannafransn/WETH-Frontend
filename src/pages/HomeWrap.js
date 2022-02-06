@@ -1,4 +1,4 @@
-import EthLogo from "../eth_logo.svg";
+import EthLogo from "../assets/svg/eth_logo.svg";
 
 const HomeWrap = () => {
   return (

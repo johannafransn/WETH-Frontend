@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { faGift } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from 'react-router-dom';
-import EthLogo from "../eth_logo.svg";
+import EthLogo from "../assets/svg/eth_logo.svg";
 
 
 
