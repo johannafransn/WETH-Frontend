@@ -1,9 +1,11 @@
-import EthLogo from "../eth_logo.svg";
+import EthLogo from "../assets/svg/eth_logo.svg";
 import React, { Component, useEffect, useState } from "react";
 import Web3 from "web3";
-import { CONTRACT_ADDRESS, ABI } from "../config";
+import { ABI } from "../config";
 import ErrorModal from "../components/ErrorModal";
 import { act } from "react-dom/cjs/react-dom-test-utils.production.min";
+import { CHAIN_INFO, CONTRACT_ADDRESS } from "../constants/chainInfo";
+import { SUPPORTED_CHAIN_IDS, CHAIN_IDS_TO_NAMES } from "../constants/chains";
 
 //TODO: add ErrorModal
 //MetaMask wallet shown/button if connect
@@ -18,19 +20,36 @@ export default function Wrap({ degree, userLocation, basic }) {
   const [metamaskAddress, setMetamaskAddress] = useState("");
   const [showToast, setShowToast] = useState();
   const [errorMsg, setErrorMsg] = useState();
+  const [chainId, setChainId] = useState(null);
 
   useEffect(() => {
+
+    if (window.ethereum) {
+      window.ethereum.on('chainChanged', () => {
+        window.location.reload()
+      })
+      window.ethereum.on('accountsChanged', () => {
+        window.location.reload()
+      })
+    }
     const loadBlockchainData = async () => {
       const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
       const network = await web3.eth.net.getNetworkType();
       await window.ethereum.enable();
-      const addresFromMetamask = await web3.eth.getAccounts();
+      const addressFromMetamask = await web3.eth.getAccounts();
+      const chainId = await web3.eth.getChainId()
 
-      setMetamaskAddress(addresFromMetamask[0]);
+      setMetamaskAddress(addressFromMetamask[0]);
       console.log(metamaskAddress, "addddddddr");
+      setChainId(chainId);
+      console.log('Network: ', CHAIN_IDS_TO_NAMES[chainId]);
+      console.log('Chain ID: ', chainId);
+      console.log('Contract Address: ', CONTRACT_ADDRESS[chainId])
 
       //Load the smart contract
-      const wethContract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
+      const wethContract = new web3.eth.Contract(
+        ABI, CONTRACT_ADDRESS[chainId]
+      );
       setWethContract(wethContract);
 
       if (metamaskAddress) {
@@ -92,12 +111,12 @@ export default function Wrap({ degree, userLocation, basic }) {
   };
 
   const onWrapClick = () => {
-    console.log('wrapping...', userEthInput)
+    console.log('wrapping...', userEthInput, 'ETH')
     return onActivityClick('wrap')
   };
 
   const onUnwrapClick = () => {
-    console.log('unwrapping...', userWethInput)
+    console.log('unwrapping...', userWethInput, 'WETH')
     onActivityClick('unwrap')
   };
 
@@ -105,9 +124,9 @@ export default function Wrap({ degree, userLocation, basic }) {
     try {
       if (metamaskAddress) {
         let web3js = new Web3(window.web3.currentProvider);
-        let input = activity == 'wrap' ? userEthInput : userWethInput
+        let input = activity == 'wrap' ? userEthInput : userWethInput;
         let userInputInWei = web3js.utils.toWei(input, 'ether');
-        let params = setParams(activity, userInputInWei)
+        let params = setParams(activity, userInputInWei);
         if (userInputInWei >= 1) {
           web3js.eth.sendTransaction(params);
         }
@@ -123,7 +142,7 @@ export default function Wrap({ degree, userLocation, basic }) {
 
   const setParams = (activity, userInputInWei) => {
     let params = {
-      'to': CONTRACT_ADDRESS,
+      'to': CONTRACT_ADDRESS[chainId],
       'from': metamaskAddress,
     }
     switch (activity) {
@@ -135,6 +154,7 @@ export default function Wrap({ degree, userLocation, basic }) {
         params['data'] = wethContract.methods.withdraw(userInputInWei).encodeABI()
       } break;
     }
+    console.log(params)
     return params
   };
 
