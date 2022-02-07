@@ -125,8 +125,8 @@ export default function Wrap({ degree, userLocation, basic }) {
   const onActivityClick = (activity) => {
     try {
       if (metamaskAddress) {
-        let web3js = new Web3(window.web3.currentProvider);
-        let input = activity == 'wrap' ? userEthInput : userWethInput;
+        let web3js = new Web3(window.ethereum);
+        let input = activity == 'wrap' ? userEthInput : userWethInput
         let userInputInWei = web3js.utils.toWei(input, 'ether');
         let params = setParams(activity, userInputInWei);
         if (userInputInWei >= 1) {
