@@ -1,18 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap");
 
 * {
   box-sizing: border-box;
 }
 
-html { 
-  font-family: 'Prompt', sans-serif;
+html {
+  font-family: "Prompt", sans-serif;
 }
 
 body {
   margin: 0;
   background-color: white;
-  font-family: 'Prompt', sans-serif;
-
+  font-family: "Prompt", sans-serif;
 }
 
 main {
@@ -20,18 +19,17 @@ main {
   text-align: center;
 }
 
-
 .btn-light {
   color: #fff;
   background-color: #0e1340;
-  border-color: #0e1340; 
+  border-color: #0e1340;
   margin-left: 20px;
-width: 140px;
+  width: 140px;
 }
-.btn-light:hover{
+.btn-light:hover {
   color: #fff;
   background-color: #3c4278;
-  border-color: #0e1340; 
+  border-color: #0e1340;
 }
 
 h1,
@@ -41,25 +39,43 @@ p {
   color: #0e1340;
 }
 
-
 .modal-content {
-	background-color: white;
-	color: #0e1340;
-	border-radius: 15px;
-	border: 2px solid #3c4278;
+  background-color: white;
+  color: #0e1340;
+  border-radius: 15px;
+  border: 2px solid #3c4278;
 }
 .closeButton {
-	color: white !important;
+  color: white !important;
 }
 
-.why-use-weth-link{
+.why-use-weth-link {
   color: #0e1340;
 }
 
-.why-use-weth-link:hover{
+.why-use-weth-link:hover {
   color: #95bcf0;
 }
 
-.metamask-addr-container{
-  position: fixed; top: 0; right: 0; border: 0;
+.metamask-addr-container {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 18px;
+}
+
+.btn-light.mm {
+  position: relative;
+  display: flex,;
+  color: #fff;
+  background-color: #3c4278;
+  border-color: #3c4278;
+  margin-left: 20px;
+  width: 160px;
+}
+
+.btn-light.mm:hover:focus:active {
+  color: #fff;
+  background-color: #3c4278;
+  border-color: #3c4278;
 }

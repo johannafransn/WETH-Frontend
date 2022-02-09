@@ -49,15 +49,16 @@ function App() {
         )}
       </main>
       <div className="metamask-addr-container">
-        <button className="btn btn-dark" onClick={handleConnectMetamask}>
-          {connectedAddrValue}
+        <button className="btn btn-light mm" onClick={handleConnectMetamask}>
+         {connectedAddrValue}
           <img
-            width="50"
-            height="50"
-            style={{ marginLeft: 10 }}
+            width="30"
+            height="30"
+            style={{  float: "left", marginRight: 5}}
             src="https://cdn.discordapp.com/attachments/908513230714982410/913132016365633596/aaaaa.png"
           ></img>
         </button>
+     
       </div>
 
       <Footer />
