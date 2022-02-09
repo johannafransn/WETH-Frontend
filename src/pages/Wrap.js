@@ -44,9 +44,9 @@ export default function Wrap({ degree, userLocation, basic }) {
 
       setMetamaskAddress(userAccountAddress[0]);
       setChainId(chainId);
-     /*  console.log("Network: ", CHAIN_IDS_TO_NAMES[chainId]);
+      console.log("Network: ", CHAIN_IDS_TO_NAMES[chainId]);
       console.log("Chain ID: ", chainId);
-      console.log("Contract Address: ", CONTRACT_ADDRESS[chainId]); */
+      console.log("Contract Address: ", CONTRACT_ADDRESS[chainId]); 
 
       //Load the smart contract
       const wethContract = new web3.eth.Contract(
@@ -62,10 +62,6 @@ export default function Wrap({ degree, userLocation, basic }) {
         setAvailableWethBalance(availableWeth);
         console.log(availableWeth, "avail Weth:");
       }
-
-      //Withdraw() (Unwrap eth function)
-      //Deposit() (wrap eth function)
-      //Balance() 'weth balance connected:'
     };
     loadBlockchainData();
   }, [userAccountAddress[0]]);
