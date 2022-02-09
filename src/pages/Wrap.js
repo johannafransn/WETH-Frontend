@@ -6,6 +6,8 @@ import ErrorModal from "../components/ErrorModal";
 import { act } from "react-dom/cjs/react-dom-test-utils.production.min";
 import { CHAIN_INFO, CONTRACT_ADDRESS } from "../constants/chainInfo";
 import { SUPPORTED_CHAIN_IDS, CHAIN_IDS_TO_NAMES } from "../constants/chains";
+import {DataContext} from '../DataContext';
+
 
 //TODO: add ErrorModal
 //MetaMask wallet shown/button if connect
@@ -21,6 +23,8 @@ export default function Wrap({ degree, userLocation, basic }) {
   const [showToast, setShowToast] = useState();
   const [errorMsg, setErrorMsg] = useState();
   const [chainId, setChainId] = useState(null);
+  const {userAccountAddress, setUserAccountAddress} = React.useContext(DataContext);
+
 
   useEffect(() => {
     if (window.ethereum) {
@@ -33,17 +37,16 @@ export default function Wrap({ degree, userLocation, basic }) {
     }
     const loadBlockchainData = async () => {
       const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
-      const network = await web3.eth.net.getNetworkType();
-      await window.ethereum.enable();
-      const addressFromMetamask = await web3.eth.getAccounts();
+      //const network = await web3.eth.net.getNetworkType();
+      //await window.ethereum.enable();
+      //const addressFromMetamask = await web3.eth.getAccounts();
       const chainId = await web3.eth.getChainId();
 
-      setMetamaskAddress(addressFromMetamask[0]);
-      console.log(metamaskAddress, "addddddddr");
+      setMetamaskAddress(userAccountAddress[0]);
       setChainId(chainId);
-      console.log("Network: ", CHAIN_IDS_TO_NAMES[chainId]);
+     /*  console.log("Network: ", CHAIN_IDS_TO_NAMES[chainId]);
       console.log("Chain ID: ", chainId);
-      console.log("Contract Address: ", CONTRACT_ADDRESS[chainId]);
+      console.log("Contract Address: ", CONTRACT_ADDRESS[chainId]); */
 
       //Load the smart contract
       const wethContract = new web3.eth.Contract(
@@ -65,7 +68,7 @@ export default function Wrap({ degree, userLocation, basic }) {
       //Balance() 'weth balance connected:'
     };
     loadBlockchainData();
-  }, [metamaskAddress]);
+  }, [userAccountAddress[0]]);
 
   const renderInputBox = () => {
     return (

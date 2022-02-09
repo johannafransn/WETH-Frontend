@@ -1,4 +1,6 @@
 import { Route, Routes } from "react-router-dom";
+import {DataContext} from './DataContext';
+
 
 import { isMobile } from "react-device-detect";
 import React, { Component, useEffect, useState } from "react";
@@ -10,6 +12,8 @@ import About from "./pages/About";
 import MobileDetected from "./pages/MobileDetected";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+const MyContext = React.createContext();
+
 
 function App() {
   const [userAccountAddress, setUserAccountAddress] = useState("");
@@ -34,6 +38,8 @@ function App() {
   };
 
   return (
+    <DataContext.Provider
+    value={{userAccountAddress: userAccountAddress}}>
     <div>
       {isMobile ? "" : <Navbar />}
       <main>
@@ -63,6 +69,7 @@ function App() {
 
       <Footer />
     </div>
+    </DataContext.Provider>
   );
 }
 
