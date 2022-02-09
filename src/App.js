@@ -64,7 +64,6 @@ function App() {
               : "Connect Metamask"}
           </button>
         </div>
-
         <Footer />
       </div>
     </DataContext.Provider>
