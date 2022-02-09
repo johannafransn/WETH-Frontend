@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import {DataContext} from './DataContext';
-
+import { DataContext } from "./DataContext";
 
 import { isMobile } from "react-device-detect";
 import React, { Component, useEffect, useState } from "react";
@@ -13,7 +12,6 @@ import MobileDetected from "./pages/MobileDetected";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 const MyContext = React.createContext();
-
 
 function App() {
   const [userAccountAddress, setUserAccountAddress] = useState("");
@@ -38,37 +36,36 @@ function App() {
   };
 
   return (
-    <DataContext.Provider
-    value={{userAccountAddress: userAccountAddress}}>
-    <div className="body-container">
-      {isMobile ? "" : <Navbar />}
-      <main >
-        {isMobile ? (
-          <MobileDetected />
-        ) : (
-          <Routes>
-            <Route path="/" element={<HomeWrap />} />
-            <Route path="/wrap" element={<Wrap />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/error" element={<MobileDetected />} />
-          </Routes>
-        )}
-      </main>
-      <div className="metamask-addr-container">
-        <button className="btn btn-light mm" onClick={handleConnectMetamask}>
-         {connectedAddrValue}
-          <img
-            width="30"
-            height="30"
-            style={{  float: "left", marginRight: 5}}
-            src="https://cdn.discordapp.com/attachments/908513230714982410/913132016365633596/aaaaa.png"
-          ></img>
-        </button>
-     
+    <DataContext.Provider value={{ userAccountAddress: userAccountAddress }}>
+      <div>
+        {isMobile ? "" : <Navbar />}
+        <main>
+          {isMobile ? (
+            <MobileDetected />
+          ) : (
+            <Routes>
+              <Route path="/" element={<HomeWrap />} />
+              <Route path="/wrap" element={<Wrap />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/error" element={<MobileDetected />} />
+            </Routes>
+          )}
+        </main>
+        <div className="metamask-addr-container">
+          <button className="btn btn-light mm" onClick={handleConnectMetamask}>
+            <img
+              width="30"
+              height="30"
+              style={{ marginRight: 5 }}
+              src="https://cdn.discordapp.com/attachments/908513230714982410/913132016365633596/aaaaa.png"
+            ></img>
+            {connectedAddrValue !== ""
+              ? connectedAddrValue
+              : "Connect Metamask"}
+          </button>
+        </div>
+        <Footer />
       </div>
-
-      <Footer />
-    </div>
     </DataContext.Provider>
   );
 }
