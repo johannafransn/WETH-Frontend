@@ -59,3 +59,7 @@ p {
 .why-use-weth-link:hover{
   color: #95bcf0;
 }
+
+.metamask-addr-container{
+  position: fixed; top: 0; right: 0; border: 0;
+}
