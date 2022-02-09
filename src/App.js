@@ -40,9 +40,9 @@ function App() {
   return (
     <DataContext.Provider
     value={{userAccountAddress: userAccountAddress}}>
-    <div>
+    <div className="body-container">
       {isMobile ? "" : <Navbar />}
-      <main>
+      <main >
         {isMobile ? (
           <MobileDetected />
         ) : (
