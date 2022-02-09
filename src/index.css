@@ -61,21 +61,24 @@ p {
   position: absolute;
   top: 20px;
   right: 40px;
-  font-size: 18px;
+  font-size: 12px;
 }
 
 .btn-light.mm {
   position: relative;
   display: flex,;
-  color: #fff;
-  background-color: #3c4278;
+  color: #0e1340;
+  background-color: #fff;
   border-color: #3c4278;
+  border-radius: 15px;
   margin-left: 20px;
   width: 160px;
+  font-size: 16px;
+
 }
 
-.btn-light.mm:hover:focus:active {
-  color: #fff;
-  background-color: #3c4278;
+.btn-light.mm:hover {
+  color: #0e1340;
+  background-color: #d3d8ee;
   border-color: #3c4278;
 }
