@@ -1,5 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import {DataContext} from './DataContext';
+import { HashRouter } from "react-router-dom";
+
 
 
 import { isMobile } from "react-device-detect";
