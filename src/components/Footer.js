@@ -24,7 +24,7 @@ const Footer = () => {
             <li>
               {" "}
               <a
-                href="	https://devpost.com/software/insuredisruption"
+                href="https://github.com/johannafransn/WETH-Frontend/graphs/contributors"
                 target="_blank"
               >
                 Team
@@ -52,7 +52,7 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a target="_blank" href="https://discord.com/invite/aSK4zew">
+              <a target="_blank" href="https://discord.com/">
                 Discord
               </a>
             </li>

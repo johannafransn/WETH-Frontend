@@ -15,7 +15,7 @@ const About = () => {
                 href="https://weth.io/"
                 target="_blank"
               >
-                Why use WETH ?
+                WTF is WETH ?
               </a>      </div>
       <div class="col-6">
         <img src={EthLogo} style={{ width: "40%" }} />
