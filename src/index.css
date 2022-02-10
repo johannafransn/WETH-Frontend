@@ -68,15 +68,18 @@ p {
 }
 
 .btn-light.mm {
-  position: relative;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
   color: #0e1340;
   background-color: #fff;
   border-color: #3c4278;
   border-radius: 15px;
   margin-left: 20px;
   width: 160px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .btn-light.mm:hover {
